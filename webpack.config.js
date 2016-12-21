@@ -15,6 +15,7 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.less$/, loader: 'style!css?sourceMap=true!less?sourceMap=true'},
+      {test: /\.css$/, loader: "style!css"},
       {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
     ]
   },

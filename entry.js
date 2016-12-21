@@ -3,14 +3,17 @@
  */
 import React from "react";
 import ReactDom from "react-dom";
-class  Hello extends React.Component {
+
+import './main.css';
+
+class Hello extends React.Component {
   render() {
     return (
-      <h5>
+      <div>
         Hello world
-      </h5>
-    )
+      </div>
 
+    )
   }
 }
 ReactDom.render(
