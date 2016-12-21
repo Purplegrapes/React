@@ -1,0 +1,7 @@
+node_modules
+package.json
+.editorconfig
+.idea/TodoProject.iml
+.idea/modules.xml
+.idea/workspace.xml
+
