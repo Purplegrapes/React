@@ -7,17 +7,27 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './entry.js',
+  entry: [
+    './entry.js',
+    'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:8080',
+  ],
   output: {
     path: __dirname,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     loaders: [
-      {test: /\.less$/, loader: 'style!css?sourceMap=true!less?sourceMap=true'},
-      {test: /\.css$/, loader: "style!css"},
-      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
-    ]
+      { test: /\.less$/, loader: 'style!css?sourceMap=true!less?sourceMap=true' },
+      { test: /\.css$/, loader: 'style!css' },
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+    ],
   },
-  devtool: "inline-source-map"
+  devtool: 'inline-source-map',
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    progress: true,
+  },
 };
