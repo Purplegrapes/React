@@ -1,14 +1,18 @@
 /**
  * Created by zhangqiong on 16/12/22.
  */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
-class TodoFooter extends React.Component {
+class TodoFooter extends Component {
+  static propTypes = {
+    length: PropTypes.number,
+  }
+
   render() {
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>1</strong>
+          <strong>{this.props.length}</strong>
           <span> item</span>
           <span> left</span>
         </span>
