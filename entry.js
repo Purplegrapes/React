@@ -10,6 +10,7 @@ import TodoFooter from './component/TodoFooter';
 class Content extends Component {
   state = {
     todoList: [],
+    value: '',
   };
 
   delTodo = (index) => {
@@ -21,14 +22,17 @@ class Content extends Component {
 
   handleAdd = (e) => {
     if (e.keyCode === 13) {
-      const newItem = e.target.value.trim();
-      e.target.value = null;
+      const newItem = this.state.value;
+      this.state.value = '';
       if (newItem !== '') {
         this.state.todoList.push(newItem);
         this.setState({ todoList: this.state.todoList });
       }
     }
   };
+  handleChange = (e) => {
+    this.setState({ value: e.target.value });
+  }
 
   render() {
     const todo = this.state.todoList;
@@ -38,7 +42,7 @@ class Content extends Component {
           <h1>
             Todos
           </h1>
-          <input className="new-todo" onKeyUp={this.handleAdd} type="text" placeholder="what's your task ?" />
+          <input className="new-todo" onKeyDown={this.handleAdd} value={this.state.value}type="text" placeholder="what's your task ?" onChange={this.handleChange} />
         </header>
         <MainSection todo={todo} delTodo={this.delTodo} />
         <TodoFooter length={this.state.todoList.length} />
