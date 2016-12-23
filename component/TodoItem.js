@@ -5,27 +5,35 @@ import React, { Component, PropTypes } from 'react';
 
 class TodoItem extends Component {
   static propTypes = {
-    value: PropTypes.string,
     index: PropTypes.number,
+    value: PropTypes.object,
     delTodo: PropTypes.func,
+    doneTodo: PropTypes.func,
   };
 
   delTodo = () => {
     const { delTodo, index } = this.props;
     delTodo(index);
   }
+  doneTodo = () => {
+    const { doneTodo, value, index } = this.props;
+    doneTodo(value, index);
+    console.log(value.done);
+  }
 
   render() {
-    const { value } = this.props;
+    const { value} = this.props;
+    const style = value.done ? { textDecoration: 'line-through', color: '#999' } : null;
     return (
       <li className="">
         <div className="view">
-          <input className="toggle" type="checkBox" />
-          <label>{value}</label>
+          <input className="toggle" type="checkBox" onChange={this.doneTodo} />
+          <label style={style}>{value.todo}</label>
           <button className="destroy" onClick={this.delTodo}></button>
         </div>
         <input className="edit" />
       </li>
+
     );
   }
 }

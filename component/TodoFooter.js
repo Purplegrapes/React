@@ -5,14 +5,15 @@ import React, { Component, PropTypes } from 'react';
 
 class TodoFooter extends Component {
   static propTypes = {
-    length: PropTypes.number,
+    todo: PropTypes.array,
   }
 
   render() {
+    const { todo } = this.props;
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>{this.props.length}</strong>
+          <strong>{todo.length}</strong>
           <span> item</span>
           <span> left</span>
         </span>

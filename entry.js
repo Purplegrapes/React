@@ -11,26 +11,40 @@ class Content extends Component {
   state = {
     todoList: [],
     value: '',
-  };
+  }
 
   delTodo = (index) => {
     this.state.todoList.splice(index, 1);
     this.setState({
       todoList: this.state.todoList,
     });
-  };
+  }
+  doneTodo = (value, index) => {
+    if (value.id === this.state.todoList[index].id) {
+      this.state.todoList[index].done = !this.state.todoList[index].done;
+    }
+    this.setState({
+      todoList: this.state.todoList,
+    });
+  }
 
   handleAdd = (e) => {
     if (e.keyCode === 13) {
-      const newItem = this.state.value;
+      const index = this.state.todoList.length;
+      const newItem = {
+        id: index,
+        todo: this.state.value,
+        done: false,
+      };
       this.state.value = '';
-      if (newItem !== '') {
+      if (newItem.todo !== '') {
         this.state.todoList.push(newItem);
         this.setState({ todoList: this.state.todoList });
       }
     }
   };
   handleChange = (e) => {
+    e.stopPropagation();
     this.setState({ value: e.target.value });
   }
 
@@ -42,10 +56,11 @@ class Content extends Component {
           <h1>
             Todos
           </h1>
-          <input className="new-todo" onKeyDown={this.handleAdd} value={this.state.value}type="text" placeholder="what's your task ?" onChange={this.handleChange} />
+          <input className="new-todo" onKeyDown={this.handleAdd} value={this.state.value} type="text"
+                 placeholder="what's your task ?" onChange={this.handleChange} />
         </header>
-        <MainSection todo={todo} delTodo={this.delTodo} />
-        <TodoFooter length={this.state.todoList.length} />
+        <MainSection todo={todo} delTodo={this.delTodo} doneTodo={this.doneTodo} allClear={this.allClear} />
+        <TodoFooter todo={this.state.todoList} />
       </div>
     );
   }
