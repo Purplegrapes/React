@@ -11,6 +11,29 @@ class Content extends Component {
   state = {
     todoList: [],
     value: '',
+    Alldone: false,
+  }
+  allDone = () => {
+    if(!this.state.Alldone){
+      this.setState({
+        todoList: this.state.todoList.map(todo => {
+          todo.done = true;
+          return todo;
+        }),
+        Alldone: true,
+      });
+    }
+    else{
+      this.setState({
+        todoList: this.state.todoList.map(todo => {
+          todo.done =false;
+          return todo;
+        }),
+        Alldone: false,
+      });
+    }
+
+    console.log('cc');
   }
 
   delTodo = (index) => {
@@ -22,12 +45,11 @@ class Content extends Component {
   doneTodo = (value, index) => {
     if (value.id === this.state.todoList[index].id) {
       this.state.todoList[index].done = !this.state.todoList[index].done;
+      this.setState({
+        todoList: this.state.todoList,
+      });
     }
-    this.setState({
-      todoList: this.state.todoList,
-    });
   }
-
   handleAdd = (e) => {
     if (e.keyCode === 13) {
       const index = this.state.todoList.length;
@@ -59,7 +81,8 @@ class Content extends Component {
           <input className="new-todo" onKeyDown={this.handleAdd} value={this.state.value} type="text"
                  placeholder="what's your task ?" onChange={this.handleChange} />
         </header>
-        <MainSection todo={todo} delTodo={this.delTodo} doneTodo={this.doneTodo} allClear={this.allClear} />
+        <MainSection todo={todo} delTodo={this.delTodo} doneTodo={this.doneTodo} clearAll={this.clearAll}
+                     allDone={this.allDone} />
         <TodoFooter todo={this.state.todoList} />
       </div>
     );

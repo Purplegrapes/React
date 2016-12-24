@@ -9,17 +9,18 @@ class MainSection extends Component {
     todo: PropTypes.array,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
+    allDone: PropTypes.func,
   };
 
   render() {
-    const { todo, delTodo, doneTodo } = this.props;
+    const { todo, delTodo, doneTodo, allDone } = this.props;
     return (
       <section className="main">
-        <input className="toggle-all" type="checkBox" />
+        <input className="toggle-all"  type="checkBox" onChange={allDone} />
         <ul className="todo-list">
           {
             todo.map((item, i) =>
-              <TodoItem key={i} done={item.done} index={i} value={item} delTodo={delTodo} doneTodo={doneTodo} />,
+              <TodoItem key={i} done={item.done} index={i} value={item} delTodo={delTodo} doneTodo={doneTodo} allDone={allDone} />,
             )
           }
         </ul>
