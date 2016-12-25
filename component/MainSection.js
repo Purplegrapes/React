@@ -7,21 +7,24 @@ import TodoItem from './TodoItem';
 class MainSection extends Component {
   static propTypes = {
     todo: PropTypes.array,
+    Alldone: PropTypes.bool,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
     allDone: PropTypes.func,
   };
-
   render() {
-    const { todo, delTodo, doneTodo, allDone } = this.props;
+    const { todo, delTodo, doneTodo, allDone, Alldone } = this.props;
     return (
       <section className="main">
-        <input className="toggle-all"  type="checkBox" onChange={allDone} />
+        <input className="toggle-all" type="checkBox" checked={Alldone} onChange={allDone} />
         <ul className="todo-list">
           {
             todo.map((item, i) =>
-              <TodoItem key={i} done={item.done} index={i} value={item} delTodo={delTodo} doneTodo={doneTodo} allDone={allDone} />,
-            )
+              <TodoItem
+                key={i} done={item.done} index={i} value={item}
+                delTodo={delTodo}
+                doneTodo={doneTodo} allDone={allDone}
+              />)
           }
         </ul>
       </section>

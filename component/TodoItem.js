@@ -9,7 +9,6 @@ class TodoItem extends Component {
     value: PropTypes.object,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
-    allDone:PropTypes.func,
   };
 
   delTodo = () => {
@@ -17,12 +16,12 @@ class TodoItem extends Component {
     delTodo(index);
   }
   doneTodo = () => {
-    const { doneTodo, value, index,allDone } = this.props;
+    const { doneTodo, value, index } = this.props;
     doneTodo(value, index);
     console.log(value.done);
   }
   render() {
-    const { value} = this.props;
+    const { value } = this.props;
     const style = value.done ? { textDecoration: 'line-through', color: '#999' } : null;
     return (
       <li className="">

@@ -11,51 +11,59 @@ class Content extends Component {
   state = {
     todoList: [], value: '', Alldone: false,
   }
+  //  点击全选触发的函数
   allDone = () => {
     if (!this.state.Alldone) {
-      console.log("22" + this.state.Alldone);
+      this.state.Alldone = true;
       this.setState({
-        todoList: this.state.todoList.map(todo => {
+        todoList: this.state.todoList.map((todo) => {
           todo.done = true;
           return todo;
-        }), Alldone: true,
+        }),
+        Alldone: this.state.Alldone,
       });
       console.log("22" + this.state.Alldone);
     } else {
+      this.state.Alldone = false;
       this.setState({
-        todoList: this.state.todoList.map(todo => {
+        todoList: this.state.todoList.map((todo) => {
           todo.done = false;
           return todo;
-        }), Alldone: false,
+        }),
+        Alldone: this.state.Alldone,
       });
       console.log("32" + this.state.Alldone);
     }
     return this.state.Alldone;
   }
-
+  //  删除当前todo
   delTodo = (index) => {
     this.state.todoList.splice(index, 1);
     this.setState({
       todoList: this.state.todoList,
     });
   }
+  //   如果每个todo都被选择或都不被选择触发的函数
   allCheck = () => {
-    this.state.Alldone = true;
-    this.setState({ Alldone: true })
-    console.log("45" + this.state.Alldone);
+    if (this.state.todoList.every(todo => todo.done)) {
+      this.state.Alldone = true;
+      this.setState({ Alldone: true });
+    } else if (this.state.todoList.every(todo => !todo.done)) {
+      this.state.Alldone = false;
+      this.setState({ Alldone: false });
+    }
   }
+  //  单个todo点击触发的事件
   doneTodo = (value, index) => {
     if (value.id === this.state.todoList[index].id) {
       this.state.todoList[index].done = !this.state.todoList[index].done;
       this.setState({
         todoList: this.state.todoList,
       });
-      if (this.state.todoList.every(todo => todo.done)) {
-        this.allCheck();
-      }
+      this.allCheck();
     }
   }
-
+//  添加todo
   handleAdd = (e) => {
     if (e.keyCode === 13) {
       const index = this.state.todoList.length;
@@ -82,15 +90,25 @@ class Content extends Component {
           <h1>
             Todos
           </h1>
-          <input className="new-todo" onKeyDown={this.handleAdd} value={this.state.value} type="text"
-                 placeholder="what's your task ?" onChange={this.handleChange} />
+          <input
+            className="new-todo" type="text"
+            placeholder="what's your task ?"
+            value={this.state.value}
+            onKeyDown={this.handleAdd}
+            onChange={this.handleChange}
+          />
         </header>
-        <MainSection todo={todo} delTodo={this.delTodo} doneTodo={this.doneTodo} clearAll={this.clearAll}
-                     allDone={this.allDone} />
+        <MainSection
+          todo={todo}
+          delTodo={this.delTodo}
+          Alldone={this.state.Alldone}
+          doneTodo={this.doneTodo}
+          allDone={this.allDone}
+        />
         <TodoFooter todo={this.state.todoList} />
       </div>
     );
   }
 }
 
-ReactDom.render(<Content />, document.getElementsByClassName('todoapp')[0],);
+ReactDom.render(<Content />, document.getElementsByClassName('todoapp')[0]);

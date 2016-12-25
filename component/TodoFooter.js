@@ -10,11 +10,11 @@ class TodoFooter extends Component {
 
   render() {
     const { todo } = this.props;
-    const completedCount = todo.reduce((count, todo) => todo.done ? count : count + 1, 0)
+    const doneCount = todo.reduce((count, todo) => todo.done ? count : count + 1, 0)
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>{completedCount}</strong>
+          <strong>{doneCount}</strong>
           <span> item</span>
           <span> left</span>
         </span>
