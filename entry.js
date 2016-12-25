@@ -9,31 +9,28 @@ import TodoFooter from './component/TodoFooter';
 
 class Content extends Component {
   state = {
-    todoList: [],
-    value: '',
-    Alldone: false,
+    todoList: [], value: '', Alldone: false,
   }
   allDone = () => {
-    if(!this.state.Alldone){
+    if (!this.state.Alldone) {
+      console.log("22" + this.state.Alldone);
       this.setState({
         todoList: this.state.todoList.map(todo => {
           todo.done = true;
           return todo;
-        }),
-        Alldone: true,
+        }), Alldone: true,
       });
-    }
-    else{
+      console.log("22" + this.state.Alldone);
+    } else {
       this.setState({
         todoList: this.state.todoList.map(todo => {
-          todo.done =false;
+          todo.done = false;
           return todo;
-        }),
-        Alldone: false,
+        }), Alldone: false,
       });
+      console.log("32" + this.state.Alldone);
     }
-
-    console.log('cc');
+    return this.state.Alldone;
   }
 
   delTodo = (index) => {
@@ -42,21 +39,28 @@ class Content extends Component {
       todoList: this.state.todoList,
     });
   }
+  allCheck = () => {
+    this.state.Alldone = true;
+    this.setState({ Alldone: true })
+    console.log("45" + this.state.Alldone);
+  }
   doneTodo = (value, index) => {
     if (value.id === this.state.todoList[index].id) {
       this.state.todoList[index].done = !this.state.todoList[index].done;
       this.setState({
         todoList: this.state.todoList,
       });
+      if (this.state.todoList.every(todo => todo.done)) {
+        this.allCheck();
+      }
     }
   }
+
   handleAdd = (e) => {
     if (e.keyCode === 13) {
       const index = this.state.todoList.length;
       const newItem = {
-        id: index,
-        todo: this.state.value,
-        done: false,
+        id: index, todo: this.state.value, done: false,
       };
       this.state.value = '';
       if (newItem.todo !== '') {
@@ -89,7 +93,4 @@ class Content extends Component {
   }
 }
 
-ReactDom.render(
-  <Content />,
-  document.getElementsByClassName('todoapp')[0],
-);
+ReactDom.render(<Content />, document.getElementsByClassName('todoapp')[0],);
