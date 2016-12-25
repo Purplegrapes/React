@@ -6,11 +6,13 @@ import React, { Component, PropTypes } from 'react';
 class TodoFooter extends Component {
   static propTypes = {
     todo: PropTypes.array,
+    clearDone: PropTypes.func,
   };
 
   render() {
-    const { todo } = this.props;
-    const doneCount = todo.reduce((count, todo) => todo.done ? count : count + 1, 0)
+    const { todo,clearDone } = this.props;
+    const doneCount = todo.reduce((count, item) => item.done ? count : count + 1, 0);
+    const style = todo.length - doneCount === 0 ? { display: 'none' } : null;
     return (
       <footer className="footer">
         <span className="todo-count">
@@ -28,6 +30,7 @@ class TodoFooter extends Component {
           </li>
           <span> </span>
         </ul>
+        <button style={style} onClick={clearDone} className="clear-completed">Clear completed</button>
       </footer>
     );
   }

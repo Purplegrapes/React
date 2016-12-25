@@ -19,8 +19,7 @@ class Content extends Component {
         todoList: this.state.todoList.map((todo) => {
           todo.done = true;
           return todo;
-        }),
-        Alldone: this.state.Alldone,
+        }), Alldone: this.state.Alldone,
       });
       console.log("22" + this.state.Alldone);
     } else {
@@ -29,8 +28,7 @@ class Content extends Component {
         todoList: this.state.todoList.map((todo) => {
           todo.done = false;
           return todo;
-        }),
-        Alldone: this.state.Alldone,
+        }), Alldone: this.state.Alldone,
       });
       console.log("32" + this.state.Alldone);
     }
@@ -81,9 +79,18 @@ class Content extends Component {
     e.stopPropagation();
     this.setState({ value: e.target.value });
   }
+  //  清除已完成的todo
+  clearDone = () => {
+    const todos = this.state.todoList.filter(item => item.done === false);
+    this.setState({
+      todoList: todos,
+      Alldone: false,
+    });
+  }
 
   render() {
     const todo = this.state.todoList;
+    const style = todo.length === 0 ? { display: 'none' } : null;
     return (
       <div>
         <header className="header">
@@ -100,12 +107,13 @@ class Content extends Component {
         </header>
         <MainSection
           todo={todo}
+          style={style}
           delTodo={this.delTodo}
           Alldone={this.state.Alldone}
           doneTodo={this.doneTodo}
           allDone={this.allDone}
         />
-        <TodoFooter todo={this.state.todoList} />
+        <TodoFooter todo={this.state.todoList} clearDone={this.clearDone} />
       </div>
     );
   }
