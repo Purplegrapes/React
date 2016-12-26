@@ -22,7 +22,7 @@ class TodoItem extends Component {
     console.log(value.done);
   }
   render() {
-    const { value,listyle } = this.props;
+    const { value, listyle } = this.props;
     const style = value.done ? { textDecoration: 'line-through', color: '#999' } : null;
     return (
       <li className="" style={listyle}>

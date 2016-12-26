@@ -12,42 +12,32 @@ class Content extends Component {
     todoList: [],
     value: '',
     Alldone: false,
-    Active: [],
-    Done: [],
     type: 0,
+    showItems: [],
   }
-  Active = () => {
-    const activeTodo = this.state.todoList.filter(item => item.done === false);
-    activeTodo.map((item) => {
-      item.listyle = { display: 'none' };
-      return activeTodo;
-    });
-    this.setState({
-      Active: activeTodo,
-      type: 1,
-    });
-    console.log(activeTodo);
+  //  添加todo
+  handleAdd = (e) => {
+    if (e.keyCode === 13) {
+      const index = this.state.todoList.length;
+      const newItem = {
+        id: index, todo: this.state.value, done: false, listyle: null,
+      };
+      this.state.value = '';
+      if (newItem.todo !== '') {
+        this.state.todoList.push(newItem);
+        this.setState({
+          todoList: this.state.todoList,
+          showItems: this.state.todoList,
+        });
+      }
+    }
   }
-  All = () => {
-    this.setState({
-      type: 0,
-    });
+  handleChange = (e) => {
+    e.stopPropagation();
+    this.setState({ value: e.target.value });
   }
-  Completed = () => {
-    const activeTodo = this.state.todoList.filter(item => item.done === true);
-    activeTodo.map((item) => {
-      item.listyle = { display: 'none' };
-      return activeTodo;
-    });
-    this.setState({
-      Done: activeTodo,
-      type: 2,
-    });
-    console.log(activeTodo);
-  }
-
   //  点击全选触发的函数
-  allDone = () => {
+  toggleAll = () => {
     if (!this.state.Alldone) {
       this.state.Alldone = true;
       this.setState({
@@ -72,11 +62,13 @@ class Content extends Component {
   //  删除当前todo
   delTodo = (index) => {
     this.state.todoList.splice(index, 1);
+    this.state.showItems.splice(index, 1);
     this.setState({
       todoList: this.state.todoList,
+      showItems: this.state.showItems,
     });
   }
-  //   如果每个todo都被选择或都不被选择触发的函数
+  //  如果每个todo都被选择或都不被选择触发的函数
   allCheck = () => {
     if (this.state.todoList.every(todo => todo.done)) {
       this.state.Alldone = true;
@@ -92,38 +84,61 @@ class Content extends Component {
       this.state.todoList[index].done = !this.state.todoList[index].done;
       this.setState({
         todoList: this.state.todoList,
+        showItems: this.state.todoList,
+      });
+      this.allCheck();
+    }
+    else if (value.id === this.state.showItems[index].id) {
+      this.state.showItems[index].done = !this.state.showItems[index].done;
+      this.setState({
+        todoList: this.state.todoList,
+        showItems: this.state.showItems,
       });
       this.allCheck();
     }
   }
-//  添加todo
-  handleAdd = (e) => {
-    if (e.keyCode === 13) {
-      const index = this.state.todoList.length;
-      const newItem = {
-        id: index, todo: this.state.value, done: false, listyle: null,
-      };
-      this.state.value = '';
-      if (newItem.todo !== '') {
-        this.state.todoList.push(newItem);
-        this.setState({ todoList: this.state.todoList });
-      }
-    }
-  };
-  handleChange = (e) => {
-    e.stopPropagation();
-    this.setState({ value: e.target.value });
+  //  footer三个按钮触发的函数
+  Active = () => {
+    const activeTodo = this.state.todoList.filter(item => item.done === false);
+    activeTodo.map((item) => {
+      item.listyle = { display: 'none' };
+      return activeTodo;
+    });
+    this.setState({
+      showItems: activeTodo,
+      type: 1,
+    });
+    console.log(activeTodo);
+  }
+  All = () => {
+    this.setState({
+      type: 0,
+      showItems: this.state.todoList,
+    });
+  }
+  Completed = () => {
+    const activeTodo = this.state.todoList.filter(item => item.done === true);
+    activeTodo.map((item) => {
+      item.listyle = { display: 'none' };
+      return activeTodo;
+    });
+    this.setState({
+      showItems: activeTodo,
+      type: 2,
+    });
+    console.log(activeTodo);
   }
   //  清除已完成的todo
   clearDone = () => {
     const todos = this.state.todoList.filter(item => item.done === false);
     this.setState({
-      todoList: todos, Alldone: false,
+      todoList: todos,
+      Alldone: false,
+      showItems: todos,
     });
   }
 
   render() {
-    const showItems = this.state.type === 1 ? this.state.Active : this.state.todoList;
     const todo = this.state.todoList;
     const style = todo.length === 0 ? { display: 'none' } : null;
     return (
@@ -142,18 +157,23 @@ class Content extends Component {
         </header>
         <MainSection
           todo={todo}
-          showItems={showItems}
+          showItems={this.state.showItems}
           activetodo={this.state.Active}
           done={this.state.done}
           style={style}
           delTodo={this.delTodo}
           Alldone={this.state.Alldone}
           doneTodo={this.doneTodo}
-          allDone={this.allDone}
+          toggleAll={this.toggleAll}
           type={this.state.type}
         />
-        <TodoFooter todo={this.state.todoList} clearDone={this.clearDone} Active={this.Active}
-                    Completed={this.Completed} All={this.All} />
+        <TodoFooter
+          todo={this.state.todoList}
+          clearDone={this.clearDone}
+          Active={this.Active}
+          Completed={this.Completed}
+          All={this.All}
+        />
       </div>
     );
   }
