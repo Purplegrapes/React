@@ -9,6 +9,7 @@ class TodoItem extends Component {
     value: PropTypes.object,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
+    listyle: PropTypes.object,
   };
 
   delTodo = () => {
@@ -21,10 +22,10 @@ class TodoItem extends Component {
     console.log(value.done);
   }
   render() {
-    const { value } = this.props;
+    const { value,listyle } = this.props;
     const style = value.done ? { textDecoration: 'line-through', color: '#999' } : null;
     return (
-      <li className="">
+      <li className="" style={listyle}>
         <div className="view">
           <input className="toggle" checked={value.done} type="checkBox" onChange={this.doneTodo} />
           <label style={style}>{value.todo}</label>

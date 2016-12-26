@@ -7,10 +7,22 @@ class TodoFooter extends Component {
   static propTypes = {
     todo: PropTypes.array,
     clearDone: PropTypes.func,
+    Active: PropTypes.func,
+    Completed: PropTypes.func,
+    All: PropTypes.func,
   };
+  allType = () => {
+    this.props.All();
+  }
+  activeType = () => {
+    this.props.Active();
+  }
+  completedType = () => {
+    this.props.Completed();
+  }
 
   render() {
-    const { todo,clearDone } = this.props;
+    const { todo, clearDone } = this.props;
     const doneCount = todo.reduce((count, item) => item.done ? count : count + 1, 0);
     const style = todo.length - doneCount === 0 ? { display: 'none' } : null;
     return (
@@ -21,12 +33,15 @@ class TodoFooter extends Component {
           <span> left</span>
         </span>
         <ul className="filters">
-          <li>
-            <a className="" href="#/active">Active</a>
+          <li onClick={this.allType}>
+            <a className="">All</a>
+          </li>
+          <li onClick={this.activeType}>
+            <a className="">Active</a>
           </li>
           <span> </span>
-          <li>
-            <a className="" href="#/completed">Completed</a>
+          <li onClick={this.completedType}>
+            <a className="">Completed</a>
           </li>
           <span> </span>
         </ul>
