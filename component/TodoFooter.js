@@ -6,6 +6,7 @@ import React, { Component, PropTypes } from 'react';
 class TodoFooter extends Component {
   static propTypes = {
     todo: PropTypes.array,
+
     clearDone: PropTypes.func,
     Active: PropTypes.func,
     Completed: PropTypes.func,

@@ -14,13 +14,43 @@ class Content extends Component {
     Alldone: false,
     type: 0,
     showItems: [],
+    change: false,
+    editText: '',
+  }
+  //  修改todo
+  changeTodo = (value, index) => {
+    if (value.id === this.state.todoList[index].id) {
+      this.state.todoList[index].change = !this.state.todoList[index].change;
+      this.setState({
+        todoList: this.state.todoList,
+      });
+      console.log(this.state.todoList[index].change);
+    }
+  }
+  //  修改后将todoList刷新
+  keyChange = (e, index) => {
+    if (e.keyCode === 27) {
+      this.state.todoList[index].change = false;
+      this.setState({
+        todoList: this.state.todoList,
+      });
+    } else if (e.keyCode === 13) {
+      console.log(index);
+      this.state.todoList[index].change = false;
+      this.state.todoList[index].todo = e.target.value;
+      this.state.editText = this.state.todoList[index].todo;
+      this.setState({
+        todoList: this.state.todoList,
+        editText: this.state.editText,
+      });
+    }
   }
   //  添加todo
   handleAdd = (e) => {
     if (e.keyCode === 13) {
       const index = this.state.todoList.length;
       const newItem = {
-        id: index, todo: this.state.value, done: false, listyle: null,
+        id: index, todo: this.state.value, done: false, listyle: null, change: false,
       };
       this.state.value = '';
       if (newItem.todo !== '') {
@@ -36,6 +66,7 @@ class Content extends Component {
     e.stopPropagation();
     this.setState({ value: e.target.value });
   }
+
   //  点击全选触发的函数
   toggleAll = () => {
     if (!this.state.Alldone) {
@@ -158,17 +189,19 @@ class Content extends Component {
         <MainSection
           todo={todo}
           showItems={this.state.showItems}
-          activetodo={this.state.Active}
-          done={this.state.done}
+          type={this.state.type}
+          exitText={this.state.exitText}
+          Alldone={this.state.Alldone}
           style={style}
           delTodo={this.delTodo}
-          Alldone={this.state.Alldone}
           doneTodo={this.doneTodo}
           toggleAll={this.toggleAll}
-          type={this.state.type}
+          changeTodo={this.changeTodo}
+          handleChange={this.handleChange}
+          keyChange={this.keyChange}
         />
         <TodoFooter
-          todo={this.state.todoList}
+          todo={todo}
           clearDone={this.clearDone}
           Active={this.Active}
           Completed={this.Completed}

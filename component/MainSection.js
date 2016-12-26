@@ -8,14 +8,22 @@ class MainSection extends Component {
   static propTypes = {
     showItems: PropTypes.array,
     Alldone: PropTypes.bool,
+    style: PropTypes.object,
+    editText: PropTypes.string,
+    handleChange: PropTypes.func,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
     toggleAll: PropTypes.func,
-    style: PropTypes.object,
+    changeTodo: PropTypes.func,
+    keyChange: PropTypes.func,
   };
 
   render() {
-    const { showItems, delTodo, doneTodo, toggleAll, Alldone, style } = this.props;
+    const { showItems, delTodo,
+            doneTodo, toggleAll,
+            Alldone, style,
+            changeTodo, editText,
+            handleChange, keyChange } = this.props;
     return (
       <section className="main">
         <input style={style} className="toggle-all" type="checkBox" checked={Alldone} onChange={toggleAll} />
@@ -25,6 +33,10 @@ class MainSection extends Component {
               key={i} done={item.done} index={i} value={item} listyle={item.style}
               delTodo={delTodo}
               doneTodo={doneTodo}
+              changeTodo={changeTodo}
+              editText={editText}
+              handleChange={handleChange}
+              keyChange={keyChange}
             />)
           }
         </ul>

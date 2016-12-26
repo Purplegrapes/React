@@ -7,11 +7,16 @@ class TodoItem extends Component {
   static propTypes = {
     index: PropTypes.number,
     value: PropTypes.object,
+    listyle: PropTypes.object,
+    editText: PropTypes.string,
+    changeTodo: PropTypes.func,
     delTodo: PropTypes.func,
     doneTodo: PropTypes.func,
-    listyle: PropTypes.object,
+    keyChange: PropTypes.func,
   };
-
+  state = {
+    exitText: this.props.editText,
+  }
   delTodo = () => {
     const { delTodo, index } = this.props;
     delTodo(index);
@@ -19,19 +24,38 @@ class TodoItem extends Component {
   doneTodo = () => {
     const { doneTodo, value, index } = this.props;
     doneTodo(value, index);
-    console.log(value.done);
   }
+  handlechangeTodo = () => {
+    const { changeTodo, value, index } = this.props;
+    changeTodo(value, index);
+  }
+  onChange = (e) => {
+    this.state.editText = e.target.value;
+    this.setState({
+      editText: this.state.exitText,
+    });
+  }
+  handleKeychange = (e) => {
+    const { index, keyChange } = this.props;
+    keyChange(e, index);
+    this.state.exitText = this.props.editText;
+    this.setState({
+      editText: this.state.exitText,
+    });
+  }
+
   render() {
     const { value, listyle } = this.props;
+    const classN = value.change ? 'editing' : null;
     const style = value.done ? { textDecoration: 'line-through', color: '#999' } : null;
     return (
-      <li className="" style={listyle}>
+      <li className={classN} style={listyle}>
         <div className="view">
           <input className="toggle" checked={value.done} type="checkBox" onChange={this.doneTodo} />
-          <label style={style}>{value.todo}</label>
+          <label style={style} onDoubleClick={this.handlechangeTodo}>{value.todo}</label>
           <button className="destroy" onClick={this.delTodo}></button>
         </div>
-        <input className="edit" />
+        <input className="edit" onChange={this.onChange} value={this.state.editText} onKeyDown={this.handleKeychange} />
       </li>
 
     );
