@@ -30,7 +30,7 @@ class MainSection extends Component {
         <ul className="todo-list">
           {
             showItems.map((item, i) => <TodoItem
-              key={i} done={item.done} index={i} value={item} listyle={item.style}
+              key={i} done={item.done} index={i} value={item}
               delTodo={delTodo}
               doneTodo={doneTodo}
               changeTodo={changeTodo}
