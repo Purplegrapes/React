@@ -4,6 +4,7 @@
 export const ADD_TODO = 'ADD_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const DEL_TODO = 'DEL_TODO';
 
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
@@ -12,4 +13,5 @@ export const VisibilityFilters = {
 };
 export const addTodo = text => ({ type: ADD_TODO, text });
 export const completeTodo = id => ({ type: COMPLETE_TODO, id });
+export const delTodo = id => ({ type: DEL_TODO, id });
 export const setVisibilityFilter = filter => ({ type: SET_VISIBILITY_FILTER, filter });

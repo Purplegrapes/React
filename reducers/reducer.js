@@ -2,7 +2,7 @@
  * Created by zhangqiong on 16/12/27.
  */
 import { combineReducers } from 'redux';
-import { ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/action';
+import { ADD_TODO, COMPLETE_TODO, DEL_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/action';
 
 const { SHOW_ALL } = VisibilityFilters
 const visibilityFilter = (state = SHOW_ALL, action) => {
@@ -28,7 +28,6 @@ const todosReducer = (todos = [], action) => {
             complete: false,
           }]
     case COMPLETE_TODO: {
-      console.log(todos);
       return todos.map((t) => {
           if (t.id !== action.id) {
             return t;
@@ -36,8 +35,12 @@ const todosReducer = (todos = [], action) => {
             return Object.assign({}, t, {
               completed: !t.completed,
             });
-          } },
+          }
+        },
       );
+    }
+    case DEL_TODO: {
+      return todos.filter(todo => todo.id !== action.id);
     }
     default:
       return todos;

@@ -7,7 +7,7 @@ import AddTodo from '../component/AddTodo';
 import MainSection from '../component/MainSection';
 import TodoFooter from '../component/TodoFooter';
 import '../main.css';
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions/action';
+import { addTodo, completeTodo, delTodo, setVisibilityFilter, VisibilityFilters } from '../actions/action';
 
 class App extends Component {
   static propTypes = {
@@ -37,6 +37,9 @@ class App extends Component {
           onTodoClick={id =>
             dispatch(completeTodo(id))
           }
+          delTodo={id =>
+            dispatch(delTodo(id))
+          }
         />
         <TodoFooter
           filter={visibilityFilter}
@@ -58,6 +61,8 @@ function selectTodos(todos, filter) {
       return todos.filter(todo => todo.completed);
     case VisibilityFilters.SHOW_ACTIVE:
       return todos.filter(todo => !todo.completed);
+    default :
+      return todos;
   }
 }
 

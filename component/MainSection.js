@@ -12,10 +12,11 @@ class MainSection extends Component {
       text: PropTypes.string,
       completed: PropTypes.bool,
     }).isRequired).isRequired,
+    delTodo: PropTypes.func,
   };
 
   render() {
-    const { todos, onTodoClick } = this.props;
+    const { todos, onTodoClick,delTodo } = this.props;
     return (
       <section className="main">
         <input className="toggle-all" type="checkBox" />
@@ -26,6 +27,7 @@ class MainSection extends Component {
                 {...todo}
                 key={index}
                 onTodoClick={onTodoClick}
+                delTodo={delTodo}
               />,
             )
           }

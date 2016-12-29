@@ -6,14 +6,20 @@ import React, { Component, PropTypes } from 'react';
 class TodoItem extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
+    delTodo: PropTypes.func,
     text: PropTypes.string,
     completed: PropTypes.bool,
     id: PropTypes.number,
   };
   onTodoClick = () => {
-    const { onTodoClick } = this.props;
-    onTodoClick(this.props.id);
-    console.log(this.props.id);
+    const { onTodoClick, id } = this.props;
+    onTodoClick(id);
+    console.log(id);
+  }
+  delTodoClick = () => {
+    const { delTodo, id } = this.props;
+    delTodo(id);
+    console.log(id);
   }
 
   render() {
@@ -25,7 +31,7 @@ class TodoItem extends Component {
         <div className="view">
           <input className="toggle" type="checkBox" checked={completed} onChange={this.onTodoClick} />
           <label>{text}</label>
-          <button className="destroy"></button>
+          <button className="destroy" onClick={this.delTodoClick}></button>
         </div>
         <input className="edit" />
       </li>
