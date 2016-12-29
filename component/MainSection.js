@@ -7,6 +7,7 @@ import TodoItem from './TodoItem';
 class MainSection extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
+    editTodo: PropTypes.func,
     toggleTodo: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
@@ -21,7 +22,7 @@ class MainSection extends Component {
   }
 
   render() {
-    const { todos, onTodoClick, delTodo } = this.props;
+    const { todos, onTodoClick, delTodo, editTodo } = this.props;
     return (
       <section className="main">
         <input className="toggle-all" type="checkBox" onChange={this.toggleTodo} />
@@ -33,6 +34,7 @@ class MainSection extends Component {
                 key={index}
                 onTodoClick={onTodoClick}
                 delTodo={delTodo}
+                editTodo={editTodo}
               />,
             )
           }

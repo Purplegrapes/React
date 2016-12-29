@@ -9,6 +9,7 @@ import TodoFooter from '../component/TodoFooter';
 import '../main.css';
 import {
   addTodo,
+  editTodo,
   completeTodo,
   delTodo,
   clearComplete,
@@ -42,6 +43,9 @@ class App extends Component {
         />
         <MainSection
           todos={visibleTodos}
+          editTodo={(text, id) =>
+            dispatch(editTodo(text, id))
+          }
           onTodoClick={id =>
             dispatch(completeTodo(id))
           }
@@ -64,7 +68,6 @@ class App extends Component {
     );
   }
 }
-
 function selectTodos(todos, filter) {
   console.log(todos)
   switch (filter) {

@@ -23,6 +23,11 @@ class TodoFooter extends Component {
     clearComplete();
   }
 
+  renderLength() {
+    const { todos } = this.props;
+    return todos.reduce((count, item) => item.complete ? count : count + 1, 0);
+  }
+
   renderFilter(filter, name) {
     if (filter === this.props.filter) {
       return name;
@@ -41,12 +46,10 @@ class TodoFooter extends Component {
   }
 
   render() {
-    const { todos } = this.props;
-    const doneLength = todos.reduce((count, item) => item.complete ? count : count + 1, 0);
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>{doneLength}</strong>
+          <strong>{this.renderLength()}</strong>
           <span> item</span>
           <span> left</span>
         </span>

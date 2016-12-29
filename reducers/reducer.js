@@ -4,6 +4,7 @@
 import { combineReducers } from 'redux';
 import {
   ADD_TODO,
+  EDIT_TODO,
   COMPLETE_TODO,
   DEL_TODO,
   CLEAR_COMPLETE,
@@ -30,22 +31,22 @@ const todosReducer = (todos = [], action) => {
             id: Math.max(...(todos.map(item => item.id))) + 1,
             text: action.text,
             complete: false,
+            editing:false,
           } : {
             id: 0,
             text: action.text,
             complete: false,
+            editing:false,
           }]
     case COMPLETE_TODO: {
       return todos.map((t) => {
-          if (t.id !== action.id) {
-            return t;
-          } else {
-            return Object.assign({}, t, {
-              complete: !t.complete,
-            });
-          }
-        },
-      );
+        if (t.id !== action.id) {
+          return t;
+        } else {
+          return { ...t,
+            complete: !t.complete,
+          };
+        } });
     }
     case DEL_TODO: {
       return todos.filter(todo => todo.id !== action.id);
@@ -58,8 +59,16 @@ const todosReducer = (todos = [], action) => {
       return todos.map(todo => ({
         ...todo,
         complete: !areAllMarked,
-      }));
-    }
+      })); }
+    case EDIT_TODO:
+      return todos.map((t) => {
+        if (t.id !== action.id) {
+          return t;
+        } else {
+          return { ...t,
+            text: action.text,
+          };
+        } });
     default:
       return todos;
   }
