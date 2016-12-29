@@ -7,6 +7,11 @@ class TodoFooter extends Component {
   static propTypes = {
     onFilterChange: PropTypes.func.isRequired,
     clearComplete: PropTypes.func,
+    todos: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.number,
+      text: PropTypes.string,
+      complete: PropTypes.bool,
+    }).isRequired).isRequired,
     filter: PropTypes.oneOf([
       'SHOW_ALL',
       'SHOW_COMPLETED',
@@ -36,10 +41,12 @@ class TodoFooter extends Component {
   }
 
   render() {
+    const { todos } = this.props;
+    const doneLength = todos.reduce((count, item) => item.complete ? count : count + 1, 0);
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>1</strong>
+          <strong>{doneLength}</strong>
           <span> item</span>
           <span> left</span>
         </span>

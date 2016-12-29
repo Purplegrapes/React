@@ -50,6 +50,7 @@ class App extends Component {
         />
         <TodoFooter
           filter={visibilityFilter}
+          todos={visibleTodos}
           onFilterChange={nextFilter =>
             dispatch(setVisibilityFilter(nextFilter))
           }
