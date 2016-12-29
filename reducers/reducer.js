@@ -7,8 +7,9 @@ import {
   COMPLETE_TODO,
   DEL_TODO,
   CLEAR_COMPLETE,
+  TOGGLE_ALL,
   SET_VISIBILITY_FILTER,
-  VisibilityFilters
+  VisibilityFilters,
 } from '../actions/action';
 
 const { SHOW_ALL } = VisibilityFilters
@@ -51,6 +52,13 @@ const todosReducer = (todos = [], action) => {
     }
     case CLEAR_COMPLETE: {
       return todos.filter(todo => todo.complete === false);
+    }
+    case TOGGLE_ALL: {
+      const areAllMarked = todos.every(todo => todo.complete);
+      return todos.map(todo => ({
+        ...todo,
+        complete: !areAllMarked,
+      }));
     }
     default:
       return todos;

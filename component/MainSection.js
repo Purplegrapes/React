@@ -7,6 +7,7 @@ import TodoItem from './TodoItem';
 class MainSection extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
+    toggleTodo: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
@@ -14,12 +15,16 @@ class MainSection extends Component {
     }).isRequired).isRequired,
     delTodo: PropTypes.func,
   };
+  toggleTodo = () => {
+    const { toggleTodo } = this.props;
+    toggleTodo();
+  }
 
   render() {
     const { todos, onTodoClick, delTodo } = this.props;
     return (
       <section className="main">
-        <input className="toggle-all" type="checkBox" />
+        <input className="toggle-all" type="checkBox" onChange={this.toggleTodo} />
         <ul className="todo-list">
           {
             todos.map((todo, index) =>

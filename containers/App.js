@@ -12,6 +12,7 @@ import {
   completeTodo,
   delTodo,
   clearComplete,
+  toggleAll,
   setVisibilityFilter,
   VisibilityFilters
 } from '../actions/action';
@@ -47,6 +48,8 @@ class App extends Component {
           delTodo={id =>
             dispatch(delTodo(id))
           }
+          toggleTodo={() =>
+            dispatch(toggleAll())}
         />
         <TodoFooter
           filter={visibilityFilter}
@@ -68,9 +71,9 @@ function selectTodos(todos, filter) {
     case VisibilityFilters.SHOW_ALL:
       return todos;
     case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed);
+      return todos.filter(todo => todo.complete);
     case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed);
+      return todos.filter(todo => !todo.complete);
     default :
       return todos;
   }
