@@ -6,38 +6,28 @@ import TodoItem from './TodoItem';
 
 class MainSection extends Component {
   static propTypes = {
-    showItems: PropTypes.array,
-    Alldone: PropTypes.bool,
-    style: PropTypes.object,
-    editText: PropTypes.string,
-    handleChange: PropTypes.func,
-    delTodo: PropTypes.func,
-    doneTodo: PropTypes.func,
-    toggleAll: PropTypes.func,
-    changeTodo: PropTypes.func,
-    keyChange: PropTypes.func,
+    onTodoClick: PropTypes.func,
+    todos: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.number,
+      text: PropTypes.string,
+      completed: PropTypes.bool,
+    }).isRequired).isRequired,
   };
 
   render() {
-    const { showItems, delTodo,
-            doneTodo, toggleAll,
-            Alldone, style,
-            changeTodo, editText,
-            handleChange, keyChange } = this.props;
+    const { todos, onTodoClick } = this.props;
     return (
       <section className="main">
-        <input style={style} className="toggle-all" type="checkBox" checked={Alldone} onChange={toggleAll} />
+        <input className="toggle-all" type="checkBox" />
         <ul className="todo-list">
           {
-            showItems.map((item, i) => <TodoItem
-              key={i} done={item.done} index={i} value={item}
-              delTodo={delTodo}
-              doneTodo={doneTodo}
-              changeTodo={changeTodo}
-              editText={editText}
-              handleChange={handleChange}
-              keyChange={keyChange}
-            />)
+            todos.map((todo, index) =>
+              <TodoItem
+                {...todo}
+                key={index}
+                onTodoClick={onTodoClick}
+              />,
+            )
           }
         </ul>
       </section>

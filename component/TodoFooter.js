@@ -5,51 +5,52 @@ import React, { Component, PropTypes } from 'react';
 
 class TodoFooter extends Component {
   static propTypes = {
-    todo: PropTypes.array,
-
-    clearDone: PropTypes.func,
-    Active: PropTypes.func,
-    Completed: PropTypes.func,
-    All: PropTypes.func,
+    onFilterChange: PropTypes.func.isRequired,
+    filter: PropTypes.oneOf([
+      'SHOW_ALL',
+      'SHOW_COMPLETED',
+      'SHOW_ACTIVE',
+    ]).isRequired,
   };
-  allType = () => {
-    this.props.All();
-  }
-  activeType = () => {
-    this.props.Active();
-  }
-  completedType = () => {
-    this.props.Completed();
+
+  renderFilter(filter, name) {
+    if (filter === this.props.filter) {
+      return name;
+    }
+    return (
+      <a
+        href="#/a"
+        onClick={(e) => { e.preventDefault(); this.props.onFilterChange(filter); }}
+      >
+        {name}
+      </a>
+    );
   }
 
   render() {
-    const { todo, clearDone } = this.props;
-    const doneCount = todo.reduce((count, item) => item.done ? count : count + 1, 0);
-    const style = todo.length - doneCount === 0 ? { display: 'none' } : null;
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>{doneCount}</strong>
+          <strong>1</strong>
           <span> item</span>
           <span> left</span>
         </span>
         <ul className="filters">
-          <li onClick={this.allType}>
-            <a className="">All</a>
+          <li>
+            {this.renderFilter('SHOW_ALL', 'All')}
+            {' '}
           </li>
-          <li onClick={this.activeType}>
-            <a className="">Active</a>
+          <li>
+            {this.renderFilter('SHOW_ACTIVE', 'Active')}
           </li>
-          <span> </span>
-          <li onClick={this.completedType}>
-            <a className="">Completed</a>
+          <li>
+            {this.renderFilter('SHOW_COMPLETED', 'Completed')}
+            {' '}
           </li>
-          <span> </span>
         </ul>
-        <button style={style} onClick={clearDone} className="clear-completed">Clear completed</button>
+        <button className="clear-completed">Clear completed</button>
       </footer>
     );
   }
-
 }
 export default TodoFooter;
