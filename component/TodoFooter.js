@@ -6,12 +6,17 @@ import React, { Component, PropTypes } from 'react';
 class TodoFooter extends Component {
   static propTypes = {
     onFilterChange: PropTypes.func.isRequired,
+    clearComplete: PropTypes.func,
     filter: PropTypes.oneOf([
       'SHOW_ALL',
       'SHOW_COMPLETED',
       'SHOW_ACTIVE',
     ]).isRequired,
   };
+  clearTodoClick = () => {
+    const { clearComplete } = this.props;
+    clearComplete();
+  }
 
   renderFilter(filter, name) {
     if (filter === this.props.filter) {
@@ -20,7 +25,10 @@ class TodoFooter extends Component {
     return (
       <a
         href="#/a"
-        onClick={(e) => { e.preventDefault(); this.props.onFilterChange(filter); }}
+        onClick={(e) => {
+          e.preventDefault();
+          this.props.onFilterChange(filter);
+        }}
       >
         {name}
       </a>
@@ -48,7 +56,7 @@ class TodoFooter extends Component {
             {' '}
           </li>
         </ul>
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={this.clearTodoClick}>Clear completed</button>
       </footer>
     );
   }

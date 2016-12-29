@@ -7,14 +7,21 @@ import AddTodo from '../component/AddTodo';
 import MainSection from '../component/MainSection';
 import TodoFooter from '../component/TodoFooter';
 import '../main.css';
-import { addTodo, completeTodo, delTodo, setVisibilityFilter, VisibilityFilters } from '../actions/action';
+import {
+  addTodo,
+  completeTodo,
+  delTodo,
+  clearComplete,
+  setVisibilityFilter,
+  VisibilityFilters
+} from '../actions/action';
 
 class App extends Component {
   static propTypes = {
     visibleTodos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
-      completed: PropTypes.bool,
+      complete: PropTypes.bool,
     }).isRequired).isRequired,
     visibilityFilter: PropTypes.oneOf([
       'SHOW_ALL',
@@ -46,6 +53,8 @@ class App extends Component {
           onFilterChange={nextFilter =>
             dispatch(setVisibilityFilter(nextFilter))
           }
+          clearComplete={() =>
+            dispatch(clearComplete())}
         />
       </div>
     );

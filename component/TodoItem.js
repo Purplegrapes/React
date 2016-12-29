@@ -8,7 +8,7 @@ class TodoItem extends Component {
     onTodoClick: PropTypes.func,
     delTodo: PropTypes.func,
     text: PropTypes.string,
-    completed: PropTypes.bool,
+    complete: PropTypes.bool,
     id: PropTypes.number,
   };
   onTodoClick = () => {
@@ -23,13 +23,13 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { text, completed } = this.props;
+    const { text, complete } = this.props;
     return (
       <li
-        style={{ textDecoration: completed ? 'line-through' : 'none' }}
+        style={{ textDecoration: complete ? 'line-through' : 'none' }}
       >
         <div className="view">
-          <input className="toggle" type="checkBox" checked={completed} onChange={this.onTodoClick} />
+          <input className="toggle" type="checkBox" checked={complete} onChange={this.onTodoClick} />
           <label>{text}</label>
           <button className="destroy" onClick={this.delTodoClick}></button>
         </div>

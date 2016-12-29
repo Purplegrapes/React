@@ -10,13 +10,13 @@ class MainSection extends Component {
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
-      completed: PropTypes.bool,
+      complete: PropTypes.bool,
     }).isRequired).isRequired,
     delTodo: PropTypes.func,
   };
 
   render() {
-    const { todos, onTodoClick,delTodo } = this.props;
+    const { todos, onTodoClick, delTodo } = this.props;
     return (
       <section className="main">
         <input className="toggle-all" type="checkBox" />
