@@ -27,26 +27,28 @@ const todosReducer = (todos = [], action) => {
     case ADD_TODO:
       return [
         ...todos,
-        todos.length !== 0 ? {
+        todos.length !== 0
+          ? {
             id: Math.max(...(todos.map(item => item.id))) + 1,
             text: action.text,
             complete: false,
-            editing:false,
+            editing: false,
           } : {
             id: 0,
             text: action.text,
             complete: false,
-            editing:false,
-          }]
+            editing: false,
+          }];
     case COMPLETE_TODO: {
       return todos.map((t) => {
         if (t.id !== action.id) {
           return t;
-        } else {
-          return { ...t,
-            complete: !t.complete,
-          };
-        } });
+        }
+        return {
+          ...t,
+          complete: !t.complete,
+        };
+      });
     }
     case DEL_TODO: {
       return todos.filter(todo => todo.id !== action.id);
@@ -59,16 +61,18 @@ const todosReducer = (todos = [], action) => {
       return todos.map(todo => ({
         ...todo,
         complete: !areAllMarked,
-      })); }
+      }));
+    }
     case EDIT_TODO:
       return todos.map((t) => {
         if (t.id !== action.id) {
           return t;
-        } else {
-          return { ...t,
-            text: action.text,
-          };
-        } });
+        }
+        return {
+          ...t,
+          text: action.text,
+        };
+      });
     default:
       return todos;
   }

@@ -16,22 +16,22 @@ class MainSection extends Component {
     }).isRequired).isRequired,
     delTodo: PropTypes.func,
   };
-  toggleTodo = () => {
-    const { toggleTodo } = this.props;
-    toggleTodo();
-  }
 
   render() {
-    const { todos, onTodoClick, delTodo, editTodo } = this.props;
+    const { todos, onTodoClick, delTodo, editTodo, toggleTodo } = this.props;
     return (
       <section className="main">
-        <input className="toggle-all" type="checkBox" onChange={this.toggleTodo} />
+        <input
+          className="toggle-all" type="checkBox"
+          checked={todos.length === 0 ? false : todos.every(todo => todo.complete)}
+          onChange={toggleTodo}
+        />
         <ul className="todo-list">
           {
-            todos.map((todo, index) =>
+            todos.map(todo =>
               <TodoItem
                 {...todo}
-                key={index}
+                key={todo.id}
                 onTodoClick={onTodoClick}
                 delTodo={delTodo}
                 editTodo={editTodo}

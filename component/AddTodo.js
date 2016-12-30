@@ -10,20 +10,19 @@ export default class AddTodo extends Component {
   state = {
     text: '',
   }
-  handleClick = (e) => {
-    const text = this.state.text;
+  handleKeyDown = (e) => {
+    const { text } = this.state;
+    const { onAddClick } = this.props;
 
     if (e.keyCode === 13 && e.target.value !== '') {
-      this.props.onAddClick(text);
-      this.state.text = '';
+      onAddClick(text);
+      this.setState({
+        text: '',
+      });
     }
-    this.setState({
-      text: this.state.text,
-    });
   }
-  handleChange = (e) => {
-    e.stopPropagation();
-    this.setState({ text: e.target.value });
+  handleChange = ({ target: { value } }) => {
+    this.setState({ text: value });
   }
 
   render() {
@@ -37,7 +36,7 @@ export default class AddTodo extends Component {
           placeholder="what's your task ?"
           value={this.state.text}
           onChange={this.handleChange}
-          onKeyDown={this.handleClick}
+          onKeyDown={this.handleKeyDown}
         />
       </header>
     );

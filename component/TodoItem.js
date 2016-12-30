@@ -26,24 +26,22 @@ class TodoItem extends Component {
     delTodo(id);
     console.log(id);
   }
-  handleClick = (e) => {
+  handleKeyDown = (e) => {
     const text = this.state.text;
     const { id, editTodo } = this.props;
     if (e.keyCode === 13) {
       editTodo(text, id);
-      this.handleEdit();
+      this.toggleEditStatus();
     }
   }
   handleChange = (e) => {
-    this.state.text = e.target.value;
     this.setState({
-      text: this.state.text,
+      text: e.target.value,
     });
   }
-  handleEdit = () => {
-    this.state.edit = !this.state.edit;
+  toggleEditStatus = () => {
     this.setState({
-      edit: this.state.edit,
+      edit: !this.state.edit,
     });
   }
 
@@ -57,10 +55,10 @@ class TodoItem extends Component {
       >
         <div className="view">
           <input className="toggle" type="checkBox" checked={complete} onChange={this.onTodoClick} />
-          <label onDoubleClick={this.handleEdit}>{text}</label>
+          <label onDoubleClick={this.toggleEditStatus}>{text}</label>
           <button className="destroy" onClick={this.delTodoClick}></button>
         </div>
-        <input className="edit" value={this.state.text} onChange={this.handleChange} onKeyDown={this.handleClick} />
+        <input className="edit" value={this.state.text} onChange={this.handleChange} onKeyDown={this.handleKeyDown} />
       </li>
 
     );

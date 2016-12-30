@@ -8,14 +8,14 @@ import MainSection from '../component/MainSection';
 import TodoFooter from '../component/TodoFooter';
 import '../main.css';
 import {
-  addTodo,
-  editTodo,
-  completeTodo,
-  delTodo,
-  clearComplete,
-  toggleAll,
-  setVisibilityFilter,
-  VisibilityFilters
+  addTodo as addTodoAction,
+  editTodo as editTodoAction,
+  completeTodo as completeTodoAction,
+  delTodo as delTodoAction,
+  clearComplete as clearCompleteAction,
+  toggleAll as toggleAllAction,
+  setVisibilityFilter as setVisibilityFilterAction,
+  VisibilityFilters,
 } from '../actions/action';
 
 class App extends Component {
@@ -30,46 +30,52 @@ class App extends Component {
       'SHOW_COMPLETED',
       'SHOW_ACTIVE',
     ]).isRequired,
+
+    addTodo: PropTypes.func.isRequired,
+    editTodo: PropTypes.func.isRequired,
+    completeTodo: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired,
+    clearComplete: PropTypes.func.isRequired,
+    toggleAll: PropTypes.func.isRequired,
+    setVisibilityFilter: PropTypes.func.isRequired,
   };
 
   render() {
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const {
+      visibleTodos,
+      visibilityFilter,
+      addTodo,
+      editTodo,
+      completeTodo,
+      delTodo,
+      clearComplete,
+      toggleAll,
+      setVisibilityFilter,
+    } = this.props;
+
     return (
       <div>
         <AddTodo
-          onAddClick={text =>
-            dispatch(addTodo(text))
-          }
+          onAddClick={addTodo}
         />
         <MainSection
           todos={visibleTodos}
-          editTodo={(text, id) =>
-            dispatch(editTodo(text, id))
-          }
-          onTodoClick={id =>
-            dispatch(completeTodo(id))
-          }
-          delTodo={id =>
-            dispatch(delTodo(id))
-          }
-          toggleTodo={() =>
-            dispatch(toggleAll())}
+          editTodo={editTodo}
+          onTodoClick={completeTodo}
+          delTodo={delTodo}
+          toggleTodo={toggleAll}
         />
         <TodoFooter
           filter={visibilityFilter}
           todos={visibleTodos}
-          onFilterChange={nextFilter =>
-            dispatch(setVisibilityFilter(nextFilter))
-          }
-          clearComplete={() =>
-            dispatch(clearComplete())}
+          onFilterChange={setVisibilityFilter}
+          clearComplete={clearComplete}
         />
       </div>
     );
   }
 }
-function selectTodos(todos, filter) {
-  console.log(todos)
+const selectTodos = (todos, filter) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
       return todos;
@@ -80,15 +86,20 @@ function selectTodos(todos, filter) {
     default :
       return todos;
   }
-}
+};
 
 // 这里的 state 是 Connect 的组件的
-function select(state) {
-  console.log(state)
-  return {
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter,
-  };
-}
+const select = state => ({
+  visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+  visibilityFilter: state.visibilityFilter,
+});
 
-export default connect(select)(App);
+export default connect(select, {
+  addTodo: addTodoAction,
+  editTodo: editTodoAction,
+  completeTodo: completeTodoAction,
+  delTodo: delTodoAction,
+  clearComplete: clearCompleteAction,
+  toggleAll: toggleAllAction,
+  setVisibilityFilter: setVisibilityFilterAction,
+})(App);

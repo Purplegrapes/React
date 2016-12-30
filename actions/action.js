@@ -15,7 +15,7 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE',
 };
 export const addTodo = text => ({ type: ADD_TODO, text });
-export const editTodo = (text , id) => ({ type: EDIT_TODO, text, id });
+export const editTodo = (text, id) => ({ type: EDIT_TODO, text, id });
 export const completeTodo = id => ({ type: COMPLETE_TODO, id });
 export const delTodo = id => ({ type: DEL_TODO, id });
 export const clearComplete = () => ({ type: CLEAR_COMPLETE });

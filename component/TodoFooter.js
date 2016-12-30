@@ -18,10 +18,6 @@ class TodoFooter extends Component {
       'SHOW_ACTIVE',
     ]).isRequired,
   };
-  clearTodoClick = () => {
-    const { clearComplete } = this.props;
-    clearComplete();
-  }
 
   renderLength() {
     const { todos } = this.props;
@@ -46,27 +42,30 @@ class TodoFooter extends Component {
   }
 
   render() {
+    const { todos, clearComplete } = this.props;
+    const style = (todos.some(todo => todo.complete) && todos.length !== 0) ? null : { display: 'none' };
     return (
       <footer className="footer">
         <span className="todo-count">
           <strong>{this.renderLength()}</strong>
-          <span> item</span>
+          <span> items</span>
           <span> left</span>
         </span>
         <ul className="filters">
           <li>
             {this.renderFilter('SHOW_ALL', 'All')}
-            {' '}
+            <span> </span>
           </li>
           <li>
             {this.renderFilter('SHOW_ACTIVE', 'Active')}
+            <span> </span>
           </li>
           <li>
             {this.renderFilter('SHOW_COMPLETED', 'Completed')}
-            {' '}
+            <span> </span>
           </li>
         </ul>
-        <button className="clear-completed" onClick={this.clearTodoClick}>Clear completed</button>
+        <button style={style} className="clear-completed" onClick={clearComplete}>Clear completed</button>
       </footer>
     );
   }
