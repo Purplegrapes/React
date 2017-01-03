@@ -11,6 +11,7 @@ class TodoItem extends Component {
     text: PropTypes.string,
     complete: PropTypes.bool,
     id: PropTypes.number,
+    editing: PropTypes.bool,
   };
   state = {
     text: this.props.text,
@@ -27,11 +28,10 @@ class TodoItem extends Component {
     console.log(id);
   }
   handleKeyDown = (e) => {
-    const text = this.state.text;
-    const { id, editTodo } = this.props;
+    const { text } = this.state;
+    const { id, editTodo, editing } = this.props;
     if (e.keyCode === 13) {
-      editTodo(text, id);
-      this.toggleEditStatus();
+      editTodo(text, id, editing);
     }
   }
   handleChange = (e) => {
@@ -40,14 +40,12 @@ class TodoItem extends Component {
     });
   }
   toggleEditStatus = () => {
-    this.setState({
-      edit: !this.state.edit,
-    });
+    const { text, id, editTodo, editing } = this.props;
+    editTodo(text, id, editing);
   }
-
   render() {
-    const { text, complete } = this.props;
-    const inputStyle = this.state.edit === true ? 'editing' : null;
+    const { text, complete, editing } = this.props;
+    const inputStyle = editing === true ? 'editing' : null;
     return (
       <li
         className={inputStyle}

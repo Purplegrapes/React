@@ -2,6 +2,7 @@
  * Created by zhangqiong on 16/12/22.
  */
 import React, { Component, PropTypes } from 'react';
+import FilterLink from '../containers/FilterLink';
 
 class TodoFooter extends Component {
   static propTypes = {
@@ -53,7 +54,7 @@ class TodoFooter extends Component {
         </span>
         <ul className="filters">
           <li>
-            {this.renderFilter('SHOW_ALL', 'All')}
+            {this.renderFilter('SHOW_ALL', 'ALL')}
             <span> </span>
           </li>
           <li>

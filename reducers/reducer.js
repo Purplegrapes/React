@@ -9,6 +9,7 @@ import {
   DEL_TODO,
   CLEAR_COMPLETE,
   TOGGLE_ALL,
+  FETCH_TODOS,
   SET_VISIBILITY_FILTER,
   VisibilityFilters,
 } from '../actions/action';
@@ -24,6 +25,8 @@ const visibilityFilter = (state = SHOW_ALL, action) => {
 }
 const todosReducer = (todos = [], action) => {
   switch (action.type) {
+    case FETCH_TODOS:
+      return [...todos, ...action.data];
     case ADD_TODO:
       return [
         ...todos,
@@ -71,6 +74,7 @@ const todosReducer = (todos = [], action) => {
         return {
           ...t,
           text: action.text,
+          editing: !action.editing,
         };
       });
     default:
