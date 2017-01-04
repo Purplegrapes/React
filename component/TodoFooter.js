@@ -11,7 +11,7 @@ class TodoFooter extends Component {
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
-      complete: PropTypes.bool,
+      completed: PropTypes.bool,
     }).isRequired).isRequired,
     filter: PropTypes.oneOf([
       'SHOW_ALL',
@@ -22,7 +22,7 @@ class TodoFooter extends Component {
 
   renderLength() {
     const { todos } = this.props;
-    return todos.reduce((count, item) => item.complete ? count : count + 1, 0);
+    return todos.reduce((count, item) => item.completed ? count : count + 1, 0);
   }
 
   renderFilter(filter, name) {
@@ -44,7 +44,7 @@ class TodoFooter extends Component {
 
   render() {
     const { todos, clearComplete } = this.props;
-    const style = (todos.some(todo => todo.complete) && todos.length !== 0) ? null : { display: 'none' };
+    const style = (todos.some(todo => todo.completed) && todos.length !== 0) ? null : { display: 'none' };
     return (
       <footer className="footer">
         <span className="todo-count">

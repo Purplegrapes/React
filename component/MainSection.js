@@ -12,7 +12,7 @@ class MainSection extends Component {
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
-      complete: PropTypes.bool,
+      completed: PropTypes.bool,
     }).isRequired).isRequired,
     delTodo: PropTypes.func,
   };
@@ -23,7 +23,7 @@ class MainSection extends Component {
       <section className="main">
         <input
           className="toggle-all" type="checkBox"
-          checked={todos.length === 0 ? false : todos.every(todo => todo.complete)}
+          checked={todos.length === 0 ? false : todos.every(todo => todo.completed)}
           onChange={toggleTodo}
         />
         <ul className="todo-list">

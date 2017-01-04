@@ -11,16 +11,17 @@ import promiseMiddleware from 'redux-promise';
 import { createAction } from 'redux-actions';
 import App from './containers/App';
 import todoApp from './reducers/reducer';
-import { fetchTodos } from './actions/action';
-import { logger, fetchRender } from './middleware/fetch';
+import { fetchTodos, getTodos } from './actions/action';
+import { logger, fetchRender } from './middlewares/fetch';
+import { getLocalStorage, setLocalStroage, } from './middlewares/LocalStorage';
 
 const store = createStore(
   todoApp,
-  applyMiddleware(logger, fetchRender),
+  applyMiddleware(logger, fetchRender, setLocalStroage, getLocalStorage,),
 );
 
 store.dispatch(fetchTodos());
-
+store.dispatch(getTodos());
 ReactDom.render(
   <Provider store={store}>
     <App />

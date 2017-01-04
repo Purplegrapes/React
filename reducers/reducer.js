@@ -10,6 +10,7 @@ import {
   CLEAR_COMPLETE,
   TOGGLE_ALL,
   FETCH_TODOS,
+  GET_TODOS,
   SET_VISIBILITY_FILTER,
   VisibilityFilters,
 } from '../actions/action';
@@ -25,6 +26,8 @@ const visibilityFilter = (state = SHOW_ALL, action) => {
 }
 const todosReducer = (todos = [], action) => {
   switch (action.type) {
+    case GET_TODOS:
+      return [...todos, action.data];
     case FETCH_TODOS:
       return [...todos, ...action.data];
     case ADD_TODO:
@@ -34,13 +37,13 @@ const todosReducer = (todos = [], action) => {
           ? {
             id: Math.max(...(todos.map(item => item.id))) + 1,
             text: action.text,
-            complete: false,
-            editing: false,
+            completed: false,
+            edited: false,
           } : {
             id: 0,
             text: action.text,
-            complete: false,
-            editing: false,
+            completed: false,
+            edited: false,
           }];
     case COMPLETE_TODO: {
       return todos.map((t) => {
@@ -49,7 +52,7 @@ const todosReducer = (todos = [], action) => {
         }
         return {
           ...t,
-          complete: !t.complete,
+          completed: !t.completed,
         };
       });
     }
@@ -57,13 +60,13 @@ const todosReducer = (todos = [], action) => {
       return todos.filter(todo => todo.id !== action.id);
     }
     case CLEAR_COMPLETE: {
-      return todos.filter(todo => todo.complete === false);
+      return todos.filter(todo => todo.completed === false);
     }
     case TOGGLE_ALL: {
-      const areAllMarked = todos.every(todo => todo.complete);
+      const areAllMarked = todos.every(todo => todo.completed);
       return todos.map(todo => ({
         ...todo,
-        complete: !areAllMarked,
+        completed: !areAllMarked,
       }));
     }
     case EDIT_TODO:
@@ -74,7 +77,7 @@ const todosReducer = (todos = [], action) => {
         return {
           ...t,
           text: action.text,
-          editing: !action.editing,
+          edited: !action.edited,
         };
       });
     default:

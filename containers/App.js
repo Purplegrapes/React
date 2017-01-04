@@ -23,7 +23,7 @@ class App extends Component {
     visibleTodos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
       text: PropTypes.string,
-      complete: PropTypes.bool,
+      completed: PropTypes.bool,
     }).isRequired).isRequired,
     visibilityFilter: PropTypes.oneOf([
       'SHOW_ALL',
@@ -80,9 +80,9 @@ const selectTodos = (todos, filter) => {
     case VisibilityFilters.SHOW_ALL:
       return todos;
     case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.complete);
+      return todos.filter(todo => todo.completed);
     case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.complete);
+      return todos.filter(todo => !todo.completed);
     default :
       return todos;
   }
