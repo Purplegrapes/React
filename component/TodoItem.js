@@ -7,6 +7,7 @@ class TodoItem extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
     editTodo: PropTypes.func,
+    editStatus: PropTypes.func,
     delTodo: PropTypes.func,
     text: PropTypes.string,
     completed: PropTypes.bool,
@@ -15,7 +16,6 @@ class TodoItem extends Component {
   };
   state = {
     text: this.props.text,
-    edited: false,
   }
   onTodoClick = () => {
     const { onTodoClick, id } = this.props;
@@ -29,9 +29,9 @@ class TodoItem extends Component {
   }
   handleKeyDown = (e) => {
     const { text } = this.state;
-    const { id, editTodo, edited } = this.props;
+    const { id, editTodo } = this.props;
     if (e.keyCode === 13) {
-      editTodo(text, id, edited);
+      editTodo(text, id);
     }
   }
   handleChange = (e) => {
@@ -40,13 +40,14 @@ class TodoItem extends Component {
     });
   }
   toggleEditStatus = () => {
-    const { text, id, editTodo, edited } = this.props;
-    editTodo(text, id, edited);
+    const { id, editStatus } = this.props;
+    editStatus(id);
   }
+
   render() {
     const { text, completed, edited } = this.props;
     console.log(completed);
-    const inputStyle = edited === true ? 'edited' : null;
+    const inputStyle = edited === true ? 'editing' : null;
     return (
       <li
         className={inputStyle}

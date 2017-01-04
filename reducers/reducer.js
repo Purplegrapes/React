@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import {
   ADD_TODO,
   EDIT_TODO,
+  EDIT_STATUS,
   COMPLETE_TODO,
   DEL_TODO,
   CLEAR_COMPLETE,
@@ -77,7 +78,17 @@ const todosReducer = (todos = [], action) => {
         return {
           ...t,
           text: action.text,
-          edited: !action.edited,
+          edited: false,
+        };
+      });
+    case EDIT_STATUS:
+      return todos.map((t) => {
+        if (t.id !== action.id) {
+          return t;
+        }
+        return {
+          ...t,
+          edited: true,
         };
       });
     default:

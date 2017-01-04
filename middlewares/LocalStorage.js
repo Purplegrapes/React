@@ -13,22 +13,19 @@ import {
 
 export const setLocalStroage = ({ getState }) => next => (action) => {
   switch (action.type) {
-
     case DEL_TODO: {
-      const result = next(action);
       localStorage.removeItem(action.id);
-      return result;
+      break;
     }
     case CLEAR_COMPLETE: {
-      const result = next(action);
-      console.log(action);
-      for (let i = 0; i < localStorage.length; i++) {
-        const data = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        if (data.completed) {
-          localStorage.removeItem(data.id);
+      const nowdata = getState().todos;
+      for (const todo of nowdata) {
+        console.log(todo);
+        if (todo.completed) {
+          localStorage.removeItem(todo.id);
         }
       }
-      return result;
+      break;
     }
     default: {
       const result = next(action);
@@ -40,7 +37,9 @@ export const setLocalStroage = ({ getState }) => next => (action) => {
       return result;
     }
   }
-}
+  return next(action);
+};
+
 export const getLocalStorage = () => next => (action) => {
   if (action.isLocal) {
     for (let i = 0; i < localStorage.length; i++) {

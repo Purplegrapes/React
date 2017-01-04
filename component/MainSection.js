@@ -8,6 +8,7 @@ class MainSection extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
     editTodo: PropTypes.func,
+    editStatus: PropTypes.func,
     toggleTodo: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.number,
@@ -18,7 +19,7 @@ class MainSection extends Component {
   };
 
   render() {
-    const { todos, onTodoClick, delTodo, editTodo, toggleTodo } = this.props;
+    const { todos, onTodoClick, delTodo, editTodo, toggleTodo, editStatus } = this.props;
     return (
       <section className="main">
         <input
@@ -35,6 +36,7 @@ class MainSection extends Component {
                 onTodoClick={onTodoClick}
                 delTodo={delTodo}
                 editTodo={editTodo}
+                editStatus={editStatus}
               />,
             )
           }

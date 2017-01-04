@@ -10,6 +10,7 @@ import '../main.css';
 import {
   addTodo as addTodoAction,
   editTodo as editTodoAction,
+  editStatus as editStatusAction,
   completeTodo as completeTodoAction,
   delTodo as delTodoAction,
   clearComplete as clearCompleteAction,
@@ -33,6 +34,7 @@ class App extends Component {
 
     addTodo: PropTypes.func.isRequired,
     editTodo: PropTypes.func.isRequired,
+    editStatus: PropTypes.func.isRequired,
     completeTodo: PropTypes.func.isRequired,
     delTodo: PropTypes.func.isRequired,
     clearComplete: PropTypes.func.isRequired,
@@ -45,6 +47,7 @@ class App extends Component {
       visibleTodos,
       visibilityFilter,
       addTodo,
+      editStatus,
       editTodo,
       completeTodo,
       delTodo,
@@ -61,6 +64,7 @@ class App extends Component {
         <MainSection
           todos={visibleTodos}
           editTodo={editTodo}
+          editStatus={editStatus}
           onTodoClick={completeTodo}
           delTodo={delTodo}
           toggleTodo={toggleAll}
@@ -97,6 +101,7 @@ const select = state => ({
 export default connect(select, {
   addTodo: addTodoAction,
   editTodo: editTodoAction,
+  editStatus: editStatusAction,
   completeTodo: completeTodoAction,
   delTodo: delTodoAction,
   clearComplete: clearCompleteAction,
