@@ -5,7 +5,7 @@ import 'whatwg-fetch';
 import { FETCH_TODOS } from '../actions/action';
 
 export const fetchRender = () => next => (action) => {
-  if (action.isAPI) {
+  if (action.payload.isAPI) {
     return fetch('http://192.168.1.108:8889/todos')
       .then(res => res.json())
       .then((data) => {

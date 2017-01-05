@@ -21,7 +21,7 @@ class TodoFooter extends Component {
   };
 
   renderLength() {
-    const { todos } = this.props;
+    const { todos,filter } = this.props;
     return todos.reduce((count, item) => item.completed ? count : count + 1, 0);
   }
 

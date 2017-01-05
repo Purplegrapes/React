@@ -20,12 +20,10 @@ class TodoItem extends Component {
   onTodoClick = () => {
     const { onTodoClick, id } = this.props;
     onTodoClick(id);
-    console.log(id);
   }
   delTodoClick = () => {
     const { delTodo, id } = this.props;
     delTodo(id);
-    console.log(id);
   }
   handleKeyDown = (e) => {
     const { text } = this.state;
@@ -46,7 +44,6 @@ class TodoItem extends Component {
 
   render() {
     const { text, completed, edited } = this.props;
-    console.log(completed);
     const inputStyle = edited === true ? 'editing' : null;
     return (
       <li

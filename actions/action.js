@@ -1,6 +1,8 @@
 /**
  * Created by zhangqiong on 16/12/27.
  */
+import { createAction, createActions } from 'redux-actions';
+
 export const ADD_TODO = 'ADD_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
@@ -16,13 +18,15 @@ export const VisibilityFilters = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE',
 };
-export const addTodo = text => ({ type: ADD_TODO, text });
-export const editStatus = id => ({ type: EDIT_STATUS, id });
-export const editTodo = (text, id, edited) => ({ type: EDIT_TODO, text, id, edited });
-export const completeTodo = id => ({ type: COMPLETE_TODO, id });
-export const delTodo = id => ({ type: DEL_TODO, id });
-export const clearComplete = () => ({ type: CLEAR_COMPLETE });
-export const toggleAll = () => ({ type: TOGGLE_ALL });
-export const setVisibilityFilter = filter => ({ type: SET_VISIBILITY_FILTER, filter });
-export const fetchTodos = () => ({ type: FETCH_TODOS, isAPI: true });
-export const getTodos = () => ({ type: GET_TODOS, isLocal: true });
+
+export const addTodo = createAction(ADD_TODO);
+export const editStatus = createAction(EDIT_STATUS);
+export const editTodo = createAction(EDIT_TODO, (text, id) => ({ text, id }));
+export const completeTodo = createAction(COMPLETE_TODO);
+export const delTodo = createAction(DEL_TODO);
+export const clearComplete = createAction(CLEAR_COMPLETE);
+export const toggleAll = createAction(TOGGLE_ALL);
+export const setVisibilityFilter = createAction(SET_VISIBILITY_FILTER);
+export const fetchTodos = createAction(FETCH_TODOS, () => ({ isAPI: true }));
+export const getTodos = createAction(GET_TODOS, () => ({ isLocal: true }));
+
