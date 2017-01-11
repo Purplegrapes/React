@@ -9,9 +9,6 @@ class TodoFooter extends Component {
     onFilterChange: PropTypes.func.isRequired,
     clearComplete: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.number,
-      text: PropTypes.string,
-      completed: PropTypes.bool,
     }).isRequired).isRequired,
     filter: PropTypes.oneOf([
       'SHOW_ALL',

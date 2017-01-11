@@ -22,9 +22,6 @@ import {
 class App extends Component {
   static propTypes = {
     visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.number,
-      text: PropTypes.string,
-      completed: PropTypes.bool,
     }).isRequired).isRequired,
     visibilityFilter: PropTypes.oneOf([
       'SHOW_ALL',

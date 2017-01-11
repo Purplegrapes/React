@@ -11,9 +11,6 @@ class MainSection extends Component {
     editStatus: PropTypes.func,
     toggleTodo: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.number,
-      text: PropTypes.string,
-      completed: PropTypes.bool,
     }).isRequired).isRequired,
     delTodo: PropTypes.func,
   };

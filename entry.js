@@ -2,7 +2,6 @@
  * Created by zhangqiong on 16/12/21.
  */
 import React from 'react';
-import 'babel-polyfill';
 import ReactDom from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
