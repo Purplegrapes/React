@@ -1,7 +1,7 @@
 /**
  * Created by zhangqiong on 16/12/27.
  */
-import { createAction, createActions } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
 export const ADD_TODO = 'ADD_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';

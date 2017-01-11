@@ -1,23 +1,22 @@
 /**
  * Created by zhangqiong on 16/12/21.
  */
-import React, { Component }from 'react';
+import React from 'react';
+import 'babel-polyfill';
 import ReactDom from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import { Provider } from 'react-redux';
-// import thunk from 'redux-thunk';
-import promiseMiddleware from 'redux-promise';
-import { createAction } from 'redux-actions';
 import App from './containers/App';
 import todoApp from './reducers/reducer';
 import { fetchTodos, getTodos } from './actions/action';
-import { logger, fetchRender } from './middlewares/fetch';
-import { getLocalStorage, setLocalStroage, } from './middlewares/LocalStorage';
+import { fetchRender } from './middlewares/fetch';
+import { getLocalStorage, setLocalStroage } from './middlewares/LocalStorage';
 
+const Logger = createLogger();
 const store = createStore(
   todoApp,
-  applyMiddleware(logger, fetchRender, setLocalStroage, getLocalStorage,),
+  applyMiddleware(Logger, fetchRender, setLocalStroage, getLocalStorage),
 );
 
 store.dispatch(fetchTodos());

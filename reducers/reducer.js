@@ -18,10 +18,17 @@ import {
 } from '../actions/action';
 
 const { SHOW_ALL } = VisibilityFilters;
-
-const visibilityFilter = handleActions({
-  [SET_VISIBILITY_FILTER]: (state, action) => action.payload,
-}, { SHOW_ALL })
+const visibilityFilter = (state = SHOW_ALL, action) => {
+  switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+// const visibilityFilter = handleActions({
+//   [SET_VISIBILITY_FILTER]: (state, action) => action.payload,
+// }, {SHOW_ALL})
 const todosReducer = handleActions({
   [GET_TODOS]: (todos, action) => [...todos, action.data],
   [FETCH_TODOS]: (todos, action) => [...todos, ...action.data],
@@ -53,7 +60,7 @@ const todosReducer = handleActions({
   }),
   [DEL_TODO]: (todos, action) => todos.filter(todo => todo.id !== action.payload),
   [CLEAR_COMPLETE]: (todos = []) => todos.filter(todo => todo.completed === false),
-  [TOGGLE_ALL]: (todos = []) => {
+  [TOGGLE_ALL]: (todos) => {
     const areAllMarked = todos.every(todo => todo.completed);
     return todos.map(todo => ({
       ...todo,
@@ -80,6 +87,7 @@ const todosReducer = handleActions({
     };
   }),
 }, []);
+
 const todoApp = combineReducers({
   visibilityFilter,
   todos: todosReducer,

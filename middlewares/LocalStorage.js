@@ -40,7 +40,6 @@ export const getLocalStorage = () => next => (action) => {
     for (let i = 0; i < localStorage.length; i++) {
       const data = JSON.parse(localStorage.getItem(localStorage.key(i)));
       const todo = { data, type: GET_TODOS };
-      console.log(todo.data);
       next(todo);
     }
   } else {
