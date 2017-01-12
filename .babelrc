@@ -5,7 +5,19 @@
   ],
   "plugins": [
     "transform-object-rest-spread",
-    "transform-class-properties"
+    "transform-class-properties",
+    ["import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "lib",
+        "style": true
+      },
+      {
+        "libraryName": "antd-mobile",
+        "libraryDirectory": "component"
+      }
+
+    ]
   ],
   "env": {
     "development": {

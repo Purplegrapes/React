@@ -16,6 +16,11 @@ module.exports = {
     path: __dirname,
     filename: 'bundle.js',
   },
+  query: {
+    plugins: [
+      ['import', [{ libraryName: 'antd', style: 'css' }]],
+    ],
+  },
   module: {
     loaders: [
       { test: /\.less$/, loader: 'style!css?sourceMap=true!less?sourceMap=true' },

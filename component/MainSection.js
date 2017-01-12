@@ -3,6 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 import TodoItem from './TodoItem';
+import { Button, Icon } from 'antd';
 
 class MainSection extends Component {
   static propTypes = {

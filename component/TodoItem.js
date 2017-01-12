@@ -2,7 +2,6 @@
  * Created by zhangqiong on 16/12/21.
  */
 import React, { Component, PropTypes } from 'react';
-
 class TodoItem extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
