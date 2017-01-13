@@ -3,6 +3,7 @@
  */
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
+import { map, filter, every } from 'lodash/fp';
 import {
   ADD_TODO,
   EDIT_TODO,
@@ -43,13 +44,13 @@ const todosReducer = handleActions({
           completed: false,
           edited: false,
         } : {
-          id: Math.max(...(todos.map(item => item.id))) + 1,
+          id: Math.max(...(map(item => item.id)(todos))) + 1,
           text: payload,
           completed: false,
           edited: false,
         }];
   },
-  [COMPLETE_TODO]: (todos, action) => todos.map((t) => {
+  [COMPLETE_TODO]: (todos, action) => map((t) => {
     if (t.id !== action.payload) {
       return t;
     }
@@ -57,17 +58,17 @@ const todosReducer = handleActions({
       ...t,
       completed: !t.completed,
     };
-  }),
-  [DEL_TODO]: (todos, action) => todos.filter(todo => todo.id !== action.payload),
-  [CLEAR_COMPLETE]: (todos = []) => todos.filter(todo => todo.completed === false),
+  })(todos),
+  [DEL_TODO]: (todos, action) => filter(todo => todo.id !== action.payload)(todos),
+  [CLEAR_COMPLETE]: (todos = []) => filter(todo => todo.completed === false)(todos),
   [TOGGLE_ALL]: (todos) => {
-    const areAllMarked = todos.every(todo => todo.completed);
+    const areAllMarked = every(todo => todo.completed)(todos);
     return todos.map(todo => ({
       ...todo,
       completed: !areAllMarked,
     }));
   },
-  [EDIT_TODO]: (todos, action) => todos.map((t) => {
+  [EDIT_TODO]: (todos, action) => map((t) => {
     if (t.id !== action.payload.id) {
       return t;
     }
@@ -76,8 +77,8 @@ const todosReducer = handleActions({
       text: action.payload.text,
       edited: false,
     };
-  }),
-  [EDIT_STATUS]: (todos, action) => todos.map((t) => {
+  })(todos),
+  [EDIT_STATUS]: (todos, action) => map((t) => {
     if (t.id !== action.payload) {
       return t;
     }
@@ -85,7 +86,7 @@ const todosReducer = handleActions({
       ...t,
       edited: true,
     };
-  }),
+  })(todos),
 }, []);
 
 const todoApp = combineReducers({

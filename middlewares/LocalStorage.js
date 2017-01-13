@@ -1,6 +1,7 @@
 /**
  * Created by zhangqiong on 17/1/3.
  */
+import { prop } from 'lodash/fp';
 import {
   CLEAR_COMPLETE,
   GET_TODOS,
@@ -8,16 +9,16 @@ import {
 } from '../actions/action';
 
 export const setLocalStroage = ({ getState }) => next => (action) => {
-  switch (action.type) {
+  switch (prop('type')(action)) {
     case DEL_TODO: {
-      localStorage.removeItem(action.payload);
+      localStorage.removeItem(prop('payload')(action));
       break;
     }
     case CLEAR_COMPLETE: {
       const nowdata = getState().todos;
       for (const todo of nowdata) {
-        if (todo.completed) {
-          localStorage.removeItem(todo.id);
+        if (prop('completed')(todo)) {
+          localStorage.removeItem(prop('id')(todo));
         }
       }
       break;
@@ -45,4 +46,5 @@ export const getLocalStorage = () => next => (action) => {
   } else {
     return next(action);
   }
+  return null;
 }

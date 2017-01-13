@@ -2,6 +2,7 @@
  * Created by zhangqiong on 16/12/21.
  */
 import React, { Component, PropTypes } from 'react';
+
 class TodoItem extends Component {
   static propTypes = {
     onTodoClick: PropTypes.func,
@@ -52,7 +53,7 @@ class TodoItem extends Component {
         <div className="view">
           <input className="toggle" type="checkBox" checked={completed} onChange={this.onTodoClick} />
           <label onDoubleClick={this.toggleEditStatus}>{text}</label>
-          <button className="destroy" onClick={this.delTodoClick}></button>
+          <button className="destroy" onClick={this.delTodoClick} />
         </div>
         <input className="edit" value={this.state.text} onChange={this.handleChange} onKeyDown={this.handleKeyDown} />
       </li>

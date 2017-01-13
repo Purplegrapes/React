@@ -3,6 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { prop, filter } from 'lodash/fp';
 import AddTodo from '../component/AddTodo';
 import MainSection from '../component/MainSection';
 import TodoFooter from '../component/TodoFooter';
@@ -21,8 +22,7 @@ import {
 
 class App extends Component {
   static propTypes = {
-    visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-    }).isRequired).isRequired,
+    visibleTodos: PropTypes.array.isRequired,
     visibilityFilter: PropTypes.oneOf([
       'SHOW_ALL',
       'SHOW_COMPLETED',
@@ -76,14 +76,14 @@ class App extends Component {
     );
   }
 }
-const selectTodos = (todos, filter) => {
-  switch (filter) {
+const selectTodos = (todos, filters) => {
+  switch (filters) {
     case VisibilityFilters.SHOW_ALL:
       return todos;
     case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed);
+      return filter(todo => prop('completed')(todo))(todos);
     case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed);
+      return filter(todo => !prop('completed')(todo))(todos);
     default :
       return todos;
   }
@@ -91,8 +91,8 @@ const selectTodos = (todos, filter) => {
 
 // 这里的 state 是 Connect 的组件的
 const select = state => ({
-  visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-  visibilityFilter: state.visibilityFilter,
+  visibleTodos: selectTodos(prop('todos')(state), prop('visibilityFilter')(state)),
+  visibilityFilter: prop('visibilityFilter')(state),
 });
 
 export default connect(select, {

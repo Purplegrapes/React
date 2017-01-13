@@ -3,7 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 import TodoItem from './TodoItem';
-import { Button, Icon } from 'antd';
+import { prop, every, map } from 'lodash/fp';
 
 class MainSection extends Component {
   static propTypes = {
@@ -11,8 +11,7 @@ class MainSection extends Component {
     editTodo: PropTypes.func,
     editStatus: PropTypes.func,
     toggleTodo: PropTypes.func,
-    todos: PropTypes.arrayOf(PropTypes.shape({
-    }).isRequired).isRequired,
+    todos: PropTypes.array.isRequired,
     delTodo: PropTypes.func,
   };
 
@@ -22,12 +21,12 @@ class MainSection extends Component {
       <section className="main">
         <input
           className="toggle-all" type="checkBox"
-          checked={todos.length === 0 ? false : todos.every(todo => todo.completed)}
+          checked={prop('length')(todos) === 0 ? false : every(todo => prop('completed')(todo))(todos)}
           onChange={toggleTodo}
         />
         <ul className="todo-list">
           {
-            todos.map(todo =>
+            map(todo =>
               <TodoItem
                 {...todo}
                 key={todo.id}
@@ -36,7 +35,7 @@ class MainSection extends Component {
                 editTodo={editTodo}
                 editStatus={editStatus}
               />,
-            )
+            )(todos)
           }
         </ul>
       </section>

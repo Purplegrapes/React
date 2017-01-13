@@ -5,20 +5,18 @@ import 'whatwg-fetch';
 import { FETCH_TODOS } from '../actions/action';
 
 export const fetchRender = () => next => (action) => {
+  const url = 'http://192.168.1.108:8889/todos';
   if (action.payload.isAPI) {
-    return fetch('http://192.168.1.108:8889/todos')
+    return fetch(url)
       .then(res => res.json())
       .then((data) => {
         const todo = { data, type: FETCH_TODOS };
-        console.log(todo.data);
         next(todo);
       });
   }
   return next(action);
 }
-export const logger = ({ getState }) => next => (action) => {
-  console.log('dispatching', action)
+export const logger = () => next => (action) => {
   const result = next(action);
-  console.log('next state', getState())
   return result;
 }
